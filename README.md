@@ -1,4 +1,4 @@
-# 🎯 Git Branching Strategy - Simulasi Kolaborasi Tim
+# 🎯 Git Branching Strategy - Issue-Driven Development
 
 ## 📌 Konsep Utama
 
@@ -7,126 +7,185 @@ main (production-ready)
   │
   └── dev (integration branch)
         │
-        ├── jobdesk/slicing-ui      (Frontend: HTML/CSS)
-        ├── jobdesk/database        (Database setup)
-        └── jobdesk/backend         (Backend logic)
+        ├── 1-slicing-ui-homepage      ← dari Issue #1
+        ├── 2-setup-database           ← dari Issue #2
+        └── 3-backend-api              ← dari Issue #3
 ```
+
+## 🎫 Issue-Driven Workflow
+
+### Langkah 1: Buat Issue di GitHub
+1. Buka tab **Issues** di repository
+2. Klik **New Issue**
+3. Isi judul & deskripsi jobdesk
+4. Assign ke developer yang bertanggung jawab
+5. Tambahkan label (enhancement, bug, dll)
+
+### Langkah 2: Buat Branch dari Issue
+1. Di halaman Issue, klik **"Create a branch"** (sidebar kanan)
+2. Pilih source branch: `dev` (PENTING!)
+3. GitHub akan buat branch dengan format: `{issue-number}-{issue-title}`
+4. Checkout branch tersebut di local
+
+### Langkah 3: Kerjakan & Push
+```bash
+git fetch origin
+git checkout 1-slicing-ui-homepage
+# ... kerjakan ...
+git add .
+git commit -m "feat: complete homepage slicing"
+git push
+```
+
+### Langkah 4: Buat Pull Request
+1. PR otomatis ter-link ke Issue
+2. Gunakan keyword: `Closes #1` di deskripsi PR
+3. Issue akan auto-close saat PR di-merge
+
+---
 
 ## 🔑 Aturan Penting
 
-### 1. Branch Hierarchy
-- **main**: Kode yang sudah siap production
-- **dev**: Tempat integrasi semua jobdesk sebelum ke main
-- **jobdesk/\***: Branch untuk masing-masing tugas/fitur
+### Branch Hierarchy
+- **main**: Kode production-ready
+- **dev**: Integrasi semua fitur
+- **{issue-number}-{title}**: Branch per Issue/jobdesk
 
-### 2. Workflow Agar Tidak Overlap
+### Golden Rule
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│  GOLDEN RULE: Selalu PULL dari DEV sebelum PUSH ke DEV!        │
+│  Selalu SYNC dengan DEV sebelum membuat PR!                    │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
 **Setiap developer WAJIB:**
 1. `git fetch origin` - Ambil update terbaru
-2. `git merge origin/dev` - Merge perubahan dev ke branch jobdesk
+2. `git merge origin/dev` - Merge perubahan dev ke branch
 3. Resolve conflict (jika ada)
 4. Baru kemudian push dan create PR
 
-## 📋 Simulasi Workflow
-
-### Scenario: 3 Jobdesk Paralel
+## 📋 Workflow Visual
 
 ```
 Timeline:
 ─────────────────────────────────────────────────────────────────►
 
-Day 1: Semua mulai dari dev yang sama
-        dev ──┬── jobdesk/slicing-ui
-              ├── jobdesk/database  
-              └── jobdesk/backend
+Day 1: Buat 3 Issues di GitHub
+        Issue #1: Slicing UI Homepage
+        Issue #2: Setup Database Schema  
+        Issue #3: Backend API Development
 
-Day 3: Slicing UI selesai, merge ke dev
-        dev (+ UI) ◄── jobdesk/slicing-ui ✓
+Day 1: Developer buat branch DARI ISSUE (source: dev)
+        dev ──┬── 1-slicing-ui-homepage
+              ├── 2-setup-database  
+              └── 3-backend-api
 
-Day 3: Database & Backend HARUS sync dengan dev terbaru!
-        jobdesk/database  ◄── merge dari dev (dapat UI)
-        jobdesk/backend   ◄── merge dari dev (dapat UI)
+Day 3: Issue #1 selesai, PR merged ke dev
+        dev (+ UI) ◄── PR #4 closes #1 ✓
 
-Day 5: Database selesai, merge ke dev
-        dev (+ UI + DB) ◄── jobdesk/database ✓
+Day 3: Developer lain SYNC dengan dev terbaru!
+        2-setup-database  ◄── merge origin/dev (dapat UI)
+        3-backend-api     ◄── merge origin/dev (dapat UI)
 
-Day 5: Backend HARUS sync lagi!
-        jobdesk/backend ◄── merge dari dev (dapat UI + DB)
+Day 5: Issue #2 selesai
+        dev (+ UI + DB) ◄── PR #5 closes #2 ✓
 
-Day 7: Backend selesai
-        dev (+ UI + DB + Backend) ◄── jobdesk/backend ✓
+Day 7: Issue #3 selesai
+        dev (complete) ◄── PR #6 closes #3 ✓
         
-Final: dev siap, merge ke main
-        main ◄── dev
+Release: dev → main
+        main ◄── PR #7 (Release v1.0)
 ```
 
 ## 🛠️ Command Cheatsheet
 
-### Setup Awal (Project Lead)
+### Checkout Branch dari Issue
 ```bash
-# Buat branch dev dari main
-git checkout main
-git checkout -b dev
-git push -u origin dev
-```
-
-### Developer Mulai Jobdesk Baru
-```bash
-# SELALU mulai dari dev terbaru!
-git checkout dev
-git pull origin dev
-git checkout -b jobdesk/nama-tugas
+# Setelah buat branch dari Issue di GitHub
+git fetch origin
+git checkout 1-slicing-ui-homepage
 ```
 
 ### Sync dengan Dev (WAJIB sebelum PR!)
 ```bash
-# Di branch jobdesk kamu
+# Di branch kamu
 git fetch origin
 git merge origin/dev
 
 # Jika ada conflict, resolve dulu
-# Lalu commit hasil merge
 git add .
-git commit -m "Merge dev into jobdesk/nama-tugas"
+git commit -m "Merge dev updates"
+git push
 ```
 
-### Selesai Jobdesk
+### Commit dengan Reference Issue
 ```bash
-git push -u origin jobdesk/nama-tugas
-# Buat Pull Request ke dev di GitHub
+# Reference issue di commit message
+git commit -m "feat: add navbar component #1"
+
+# Atau close issue via commit
+git commit -m "feat: complete homepage - closes #1"
 ```
 
 ## ⚠️ Yang Harus Dihindari
 
 | ❌ Jangan | ✅ Lakukan |
 |-----------|-----------|
-| Langsung merge ke main | Merge ke dev dulu, test, baru ke main |
+| Buat branch manual tanpa Issue | Selalu buat Issue dulu |
+| Branch dari main | Branch dari dev |
 | Lupa sync dengan dev | Sync MINIMAL sekali sehari |
-| Force push | Komunikasi dengan tim dulu |
-| Commit langsung ke dev/main | Selalu via branch & PR |
+| Langsung merge ke main | Merge ke dev dulu, test, baru ke main |
 
-## 📁 Struktur Project Simulasi
+## 📁 Struktur Project
 
 ```
 learn-git-eksperimen/
 ├── README.md
-├── index.html          # Jobdesk 1: Slicing UI
+├── index.html          # Issue #1: Slicing UI
 ├── css/
-│   └── style.css       # Jobdesk 1: Slicing UI
+│   └── style.css       # Issue #1: Slicing UI
 ├── database/
-│   └── schema.sql      # Jobdesk 2: Database
+│   ├── schema.sql      # Issue #2: Database
+│   └── config.js       # Issue #2: Database
 ├── backend/
-│   └── server.js       # Jobdesk 3: Backend
+│   ├── server.js       # Issue #3: Backend
+│   └── client.js       # Issue #3: Backend
 └── docs/
-    └── workflow.md     # Dokumentasi tambahan
+    └── workflow.md
 ```
 
-## 🎮 Simulasi Praktik
+## 🎮 Cara Memulai
 
-Lihat file `docs/workflow.md` untuk step-by-step simulasi!
+### 1. Buat Issues di GitHub
+Buat 3 Issue dengan detail:
+
+**Issue #1: Slicing UI Homepage**
+```
+Membuat tampilan homepage dengan HTML & CSS
+- [ ] Navbar responsive
+- [ ] Hero section
+- [ ] Footer
+```
+
+**Issue #2: Setup Database Schema**
+```
+Setup struktur database
+- [ ] Users table
+- [ ] Products table
+- [ ] Orders table
+```
+
+**Issue #3: Backend API Development**
+```
+Membuat REST API
+- [ ] GET /api/users
+- [ ] POST /api/users
+- [ ] GET /api/products
+```
+
+### 2. Assign Developer ke Issue
+### 3. Buat Branch dari Issue (source: dev)
+### 4. Kerjakan, Sync, PR, Merge!
+
+Good luck! 🚀
