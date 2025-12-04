@@ -3,33 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Simulasi Git</title>
+    <title>Team Project - Simulasi Kolaborasi</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <!-- ============================================
+         TEMPLATE DASAR - Branch: dev
+         
+         Issue #1 (Slicing UI): Edit bagian HTML & CSS
+         Issue #2 (Database): Tidak perlu edit file ini
+         Issue #3 (Backend): Edit bagian script/API calls
+         
+         ⚠️ JANGAN HAPUS KOMENTAR PEMBATAS INI
+         ============================================ -->
+
     <header>
-        <nav>
-            <h1>My Project</h1>
-            <!-- Jobdesk 1: Tambahkan navbar di sini -->
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1>🚀 Team Project</h1>
+            </div>
+            
+            <!-- TODO Issue #1: Tambahkan nav-menu di sini -->
+            <ul class="nav-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
         </nav>
     </header>
 
     <main>
-        <section id="hero">
-            <h2>Welcome to Our Project</h2>
-            <p>This is a simulation project for learning Git branching strategy.</p>
+        <!-- HERO SECTION -->
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h2>Welcome to Our Project</h2>
+                <p>Simulasi kolaborasi tim dengan Git branching strategy</p>
+                <!-- TODO Issue #1: Tambahkan CTA button -->
+            </div>
         </section>
 
-        <section id="content">
-            <!-- Jobdesk 1: Tambahkan content sections -->
+        <!-- FEATURES SECTION -->
+        <section id="features" class="features">
+            <h2>Features</h2>
+            <div class="features-grid">
+                <!-- TODO Issue #1: Tambahkan feature cards -->
+                <div class="feature-card">
+                    <h3>🎨 UI/UX</h3>
+                    <p>Desain modern dan responsive</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🗄️ Database</h3>
+                    <p>Struktur data yang terorganisir</p>
+                </div>
+                <div class="feature-card">
+                    <h3>⚙️ Backend</h3>
+                    <p>API yang powerful dan aman</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- DATA SECTION - Diisi oleh Backend -->
+        <section id="data" class="data-section">
+            <h2>Data Dashboard</h2>
+            <div id="users-container">
+                <!-- TODO Issue #3: Data users akan dimuat di sini -->
+                <p class="loading">Loading data...</p>
+            </div>
+            <div id="products-container">
+                <!-- TODO Issue #3: Data products akan dimuat di sini -->
+            </div>
+        </section>
+
+        <!-- ABOUT SECTION -->
+        <section id="about" class="about">
+            <h2>About Project</h2>
+            <p>Project ini dibuat untuk mempelajari Git branching strategy dengan pendekatan Issue-driven development.</p>
+        </section>
+
+        <!-- CONTACT SECTION -->
+        <section id="contact" class="contact">
+            <h2>Contact</h2>
+            <!-- TODO Issue #1: Tambahkan contact form -->
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2024 Team Project</p>
+        <p>&copy; 2024 Team Project | Built with ❤️</p>
     </footer>
 
-    <!-- Jobdesk 3: Backend connection -->
-    <script src="backend/client.js"></script>
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
 </body>
 </html>

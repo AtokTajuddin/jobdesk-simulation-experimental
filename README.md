@@ -15,6 +15,7 @@ main (production-ready)
 ## 🎫 Issue-Driven Workflow
 
 ### Langkah 1: Buat Issue di GitHub
+
 1. Buka tab **Issues** di repository
 2. Klik **New Issue**
 3. Isi judul & deskripsi jobdesk
@@ -22,12 +23,14 @@ main (production-ready)
 5. Tambahkan label (enhancement, bug, dll)
 
 ### Langkah 2: Buat Branch dari Issue
+
 1. Di halaman Issue, klik **"Create a branch"** (sidebar kanan)
 2. Pilih source branch: `dev` (PENTING!)
 3. GitHub akan buat branch dengan format: `{issue-number}-{issue-title}`
 4. Checkout branch tersebut di local
 
 ### Langkah 3: Kerjakan & Push
+
 ```bash
 git fetch origin
 git checkout 1-slicing-ui-homepage
@@ -38,6 +41,7 @@ git push
 ```
 
 ### Langkah 4: Buat Pull Request
+
 1. PR otomatis ter-link ke Issue
 2. Gunakan keyword: `Closes #1` di deskripsi PR
 3. Issue akan auto-close saat PR di-merge
@@ -47,6 +51,7 @@ git push
 ## 🔑 Aturan Penting
 
 ### Branch Hierarchy
+
 - **main**: Kode production-ready
 - **dev**: Integrasi semua fitur
 - **{issue-number}-{title}**: Branch per Issue/jobdesk
@@ -60,6 +65,7 @@ git push
 ```
 
 **Setiap developer WAJIB:**
+
 1. `git fetch origin` - Ambil update terbaru
 2. `git merge origin/dev` - Merge perubahan dev ke branch
 3. Resolve conflict (jika ada)
@@ -73,12 +79,12 @@ Timeline:
 
 Day 1: Buat 3 Issues di GitHub
         Issue #1: Slicing UI Homepage
-        Issue #2: Setup Database Schema  
+        Issue #2: Setup Database Schema
         Issue #3: Backend API Development
 
 Day 1: Developer buat branch DARI ISSUE (source: dev)
         dev ──┬── 1-slicing-ui-homepage
-              ├── 2-setup-database  
+              ├── 2-setup-database
               └── 3-backend-api
 
 Day 3: Issue #1 selesai, PR merged ke dev
@@ -93,7 +99,7 @@ Day 5: Issue #2 selesai
 
 Day 7: Issue #3 selesai
         dev (complete) ◄── PR #6 closes #3 ✓
-        
+
 Release: dev → main
         main ◄── PR #7 (Release v1.0)
 ```
@@ -101,6 +107,7 @@ Release: dev → main
 ## 🛠️ Command Cheatsheet
 
 ### Checkout Branch dari Issue
+
 ```bash
 # Setelah buat branch dari Issue di GitHub
 git fetch origin
@@ -108,6 +115,7 @@ git checkout 1-slicing-ui-homepage
 ```
 
 ### Sync dengan Dev (WAJIB sebelum PR!)
+
 ```bash
 # Di branch kamu
 git fetch origin
@@ -120,6 +128,7 @@ git push
 ```
 
 ### Commit dengan Reference Issue
+
 ```bash
 # Reference issue di commit message
 git commit -m "feat: add navbar component #1"
@@ -130,12 +139,12 @@ git commit -m "feat: complete homepage - closes #1"
 
 ## ⚠️ Yang Harus Dihindari
 
-| ❌ Jangan | ✅ Lakukan |
-|-----------|-----------|
-| Buat branch manual tanpa Issue | Selalu buat Issue dulu |
-| Branch dari main | Branch dari dev |
-| Lupa sync dengan dev | Sync MINIMAL sekali sehari |
-| Langsung merge ke main | Merge ke dev dulu, test, baru ke main |
+| ❌ Jangan                      | ✅ Lakukan                            |
+| ------------------------------ | ------------------------------------- |
+| Buat branch manual tanpa Issue | Selalu buat Issue dulu                |
+| Branch dari main               | Branch dari dev                       |
+| Lupa sync dengan dev           | Sync MINIMAL sekali sehari            |
+| Langsung merge ke main         | Merge ke dev dulu, test, baru ke main |
 
 ## 📁 Struktur Project
 
@@ -158,9 +167,11 @@ learn-git-eksperimen/
 ## 🎮 Cara Memulai
 
 ### 1. Buat Issues di GitHub
+
 Buat 3 Issue dengan detail:
 
 **Issue #1: Slicing UI Homepage**
+
 ```
 Membuat tampilan homepage dengan HTML & CSS
 - [ ] Navbar responsive
@@ -169,6 +180,7 @@ Membuat tampilan homepage dengan HTML & CSS
 ```
 
 **Issue #2: Setup Database Schema**
+
 ```
 Setup struktur database
 - [ ] Users table
@@ -177,6 +189,7 @@ Setup struktur database
 ```
 
 **Issue #3: Backend API Development**
+
 ```
 Membuat REST API
 - [ ] GET /api/users
@@ -185,7 +198,9 @@ Membuat REST API
 ```
 
 ### 2. Assign Developer ke Issue
+
 ### 3. Buat Branch dari Issue (source: dev)
+
 ### 4. Kerjakan, Sync, PR, Merge!
 
 Good luck! 🚀
