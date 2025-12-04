@@ -1,8 +1,8 @@
 /**
  * ============================================
- * BACKEND SERVER - Branch: dev
+ * BACKEND SERVER - Branch: 3-feat-backend
  * 
- * Issue #3: Implementasi semua TODO di file ini
+ * Issue #3: Backend API Implementation
  * ============================================
  */
 
@@ -10,6 +10,11 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+
+// Import Routes
+const userRoutes = require('./routes/users');
+const productRoutes = require('./routes/products');
+const orderRoutes = require('./routes/orders');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -44,80 +49,10 @@ app.get('/api', (req, res) => {
     });
 });
 
-// ----- USER ROUTES -----
-// TODO Issue #3: Implementasi dengan database
-
-app.get('/api/users', (req, res) => {
-    // TODO Issue #3: Connect ke database
-    const mockUsers = [
-        { id: 1, username: 'admin', email: 'admin@example.com', role: 'admin' },
-        { id: 2, username: 'john', email: 'john@example.com', role: 'user' }
-    ];
-    res.json({ success: true, data: mockUsers });
-});
-
-app.get('/api/users/:id', (req, res) => {
-    // TODO Issue #3: Get user by ID
-    res.json({ success: true, data: { id: req.params.id, username: 'user' } });
-});
-
-app.post('/api/users', (req, res) => {
-    // TODO Issue #3: Create user dengan validasi
-    const { username, email, password } = req.body;
-    
-    if (!username || !email || !password) {
-        return res.status(400).json({ success: false, message: 'Missing required fields' });
-    }
-    
-    res.status(201).json({ success: true, message: 'User created', data: { username, email } });
-});
-
-app.put('/api/users/:id', (req, res) => {
-    // TODO Issue #3: Update user
-    res.json({ success: true, message: 'User updated' });
-});
-
-app.delete('/api/users/:id', (req, res) => {
-    // TODO Issue #3: Delete user
-    res.json({ success: true, message: 'User deleted' });
-});
-
-// ----- PRODUCT ROUTES -----
-// TODO Issue #3: Implementasi CRUD products
-
-app.get('/api/products', (req, res) => {
-    const mockProducts = [
-        { id: 1, name: 'Laptop', price: 999.99, stock: 10 },
-        { id: 2, name: 'T-Shirt', price: 29.99, stock: 50 },
-        { id: 3, name: 'Novel', price: 14.99, stock: 100 }
-    ];
-    res.json({ success: true, data: mockProducts });
-});
-
-app.get('/api/products/:id', (req, res) => {
-    res.json({ success: true, data: { id: req.params.id, name: 'Product' } });
-});
-
-app.post('/api/products', (req, res) => {
-    // TODO Issue #3: Create product
-    res.status(201).json({ success: true, message: 'Product created' });
-});
-
-// ----- ORDER ROUTES -----
-// TODO Issue #3: Implementasi order management
-
-app.get('/api/orders', (req, res) => {
-    const mockOrders = [
-        { id: 1, order_number: 'ORD-001', total: 999.99, status: 'completed' },
-        { id: 2, order_number: 'ORD-002', total: 44.98, status: 'pending' }
-    ];
-    res.json({ success: true, data: mockOrders });
-});
-
-app.post('/api/orders', (req, res) => {
-    // TODO Issue #3: Create order
-    res.status(201).json({ success: true, message: 'Order created' });
-});
+// Use Routes
+app.use('/api/users', userRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/orders', orderRoutes);
 
 // ===== ERROR HANDLING =====
 
